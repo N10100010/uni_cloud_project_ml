@@ -4,15 +4,10 @@
 if __name__ == '__main__':
     import json
     import requests
-    response_object = {'status': 'success'}
 
     response = requests.get(
-        "https://huggingface.co/api/models",
-        params={"search": "nota-ai", "limit": 10, "full": "True", "config": "True"},
-        headers={"Authorization": "Bearer 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"}
+        "https://bo7apkf9fg.execute-api.eu-central-1.amazonaws.com/TestStage?model_id=nota-ai/bk-sdm-tiny",
     )
     content = json.loads(response.content)
 
-    response_object['data'] = content
-
-    print(response_object['data'] )
+    print(content['body'])

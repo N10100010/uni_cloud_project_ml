@@ -112,6 +112,18 @@ def __model_by_id():
     return jsonify(response_object)
 
 
+@app.route('/test', methods=['GET'])
+def __test():
+
+    response = requests.get(
+        url="https://openimagebucket.s3.eu-central-1.amazonaws.com/Baysion_Theorem.png"
+    )
+
+
+
+    breakpoint()
+
+
 if __name__ == '__main__':
     app.run()
 

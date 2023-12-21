@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <div class="row">
+  <div class="row">
       <div class="col-sm-10">
         <h1>Hugging Face Demo <img ref="hf_smily" src="/hugging-face.png" alt="Image Description" class="image-icon"></h1>
+        <menuBar></menuBar>
+      </div>
+      <div>
         <hr>
         <h2>Model usage Page</h2>
         <alert :message=message v-if="showMessage"></alert>
@@ -18,6 +21,7 @@
 <script>
 import axios from 'axios';
 import Alert from './Alert.vue';
+import menuBar from './tiles/menuBar.vue';
 
 
 export default {
@@ -30,6 +34,7 @@ export default {
   },
   components: {
     alert: Alert,
+    menuBar: menuBar
   },
   created() {
     this.getModelById(this.modelId)

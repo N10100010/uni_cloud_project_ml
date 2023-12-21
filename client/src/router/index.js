@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Start from '../components/Start.vue'
-import Load from '../components/Load.vue'
+import About from '../components/About.vue'
 import sb from '../components/tiles/searchBar.vue'
 import ModelUse from '../components/ModelUse.vue'
 
@@ -13,9 +13,9 @@ const router = createRouter({
       component: Start,
     },
     {
-      path: '/load',
-      name: 'load',
-      component: Load
+      path: '/about',
+      name: 'about',
+      component: About
     },
     {
       path: '/sb',
