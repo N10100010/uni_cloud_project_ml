@@ -9,10 +9,11 @@
       class="form-control"
       id="searchInput"
       v-model="searchQuery"
-      placeholder="Enter search term">
+      placeholder="Enter search term"
+      style="background-color: #d3d3d3">
   </div>
 
-  <div>
+  <div id="modelsTable">
     <table class="table table-hover">
       <thead>
         <tr>
@@ -26,11 +27,11 @@
       </thead>
       <tbody>
         <tr v-for="model in filteredModels" :key="model._id">
-          <td>{{ formatModelName(model.id) }}</td>
-          <td>{{ model.author }}</td>
-          <td>{{ model.pipeline_tag }}</td>
-          <td>{{ formatLastModified(model.lastModified) }}</td>
-          <td>
+          <td class="hoverTD">{{ formatModelName(model.id) }}</td>
+          <td class="hoverTD">{{ model.author }}</td>
+          <td class="hoverTD">{{ model.pipeline_tag }}</td>
+          <td class="hoverTD">{{ formatLastModified(model.lastModified) }}</td>
+          <td class="hoverTD">
             <!-- Add the "Use Model" button here -->
             <button
                 class="btn btn-warning btn-sm"
@@ -95,7 +96,3 @@ export default {
   },
 };
 </script>
-
-<style>
-/* Add your styling if needed */
-</style>
