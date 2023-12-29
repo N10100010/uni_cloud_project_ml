@@ -90,7 +90,6 @@ export default {
       return idString.split('/')[1];
     },
     useModel(model) {
-      // Navigate to the ModelUse component with the selected model ID
       this.$router.push({ name: 'ModelUse', params: { modelId: model.id } });
     },
   },

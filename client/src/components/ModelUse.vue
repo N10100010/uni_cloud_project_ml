@@ -76,11 +76,8 @@ generateImage() {
         return;
       }
 
-
-      // Use Axios for HTTP requests
       axios.put(`http://localhost:5001/generate_image/${encodeURIComponent(this.inputText)}`)
         .then(response => {
-          // Handle the response as needed
           console.log('Image generated:', response.data);
           const model_output = document.getElementById('modelOutput')
           //model_output.src = `data:${response.data.data.mimeType};base64,${response.data.data.base64String}`;
@@ -89,7 +86,6 @@ generateImage() {
           model_output.style = 'display: block;';
         })
         .catch(error => {
-          // Handle errors
           console.error('Error generating image:', error);
         });
     }

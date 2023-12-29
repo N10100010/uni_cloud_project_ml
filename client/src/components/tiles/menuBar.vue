@@ -14,7 +14,6 @@
 export default {
   methods: {
     navigateTo(route) {
-      // Use Vue Router to navigate to the specified route
       this.$router.push({ name: route });
     }
   }

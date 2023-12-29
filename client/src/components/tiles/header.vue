@@ -9,7 +9,6 @@
 export default {
   mounted() {
     this.setSmilySize();
-    // You may also want to listen for window resize events to adjust the size dynamically
     window.addEventListener('resize', this.setSmilySize);
   },
   methods: {
