@@ -6,7 +6,6 @@
       <li @click="navigateTo('start')">Home</li>
       <li @click="navigateTo('about')">About</li>
       <li @click="navigateTo('contact')">Contact</li>
-      <!-- Add more menu items as needed -->
     </ul>
   </div>
 </template>

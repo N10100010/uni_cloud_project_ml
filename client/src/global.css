@@ -57,3 +57,13 @@ h1, h2, h3, h4, h5, h6, label, p, li, th, td {
 #app {
   flex: 1;
 }
+
+.vue-button {
+  /* Add relevant Vue classes or your custom styling here */
+  padding: 10px;
+  background-color: #41b883;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
