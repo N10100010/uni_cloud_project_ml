@@ -27,24 +27,6 @@ import menuBar from './tiles/menuBar.vue';
 
 export default {
   data() {
-    return {
-      activeAddBookModal: false,
-      activeEditBookModal: false,
-      addBookForm: {
-        title: '',
-        author: '',
-        read: [],
-      },
-      books: [],
-      editBookForm: {
-        id: '',
-        title: '',
-        author: '',
-        read: [],
-      },
-      message: '',
-      showMessage: false,
-    };
   },
   components: {
     alert: Alert,
