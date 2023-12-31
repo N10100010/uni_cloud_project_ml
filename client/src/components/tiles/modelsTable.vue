@@ -1,7 +1,4 @@
-<!-- ModelsTable.vue -->
-
 <template>
-
   <div class="mb-3">
     <label for="searchInput" class="form-label">Search Models:</label>
     <input
@@ -10,7 +7,8 @@
       id="searchInput"
       v-model="searchQuery"
       placeholder="Enter search term"
-      style="background-color: #d3d3d3">
+      style="background-color: #d3d3d3"
+    >
   </div>
 
   <div id="modelsTable">
@@ -33,15 +31,12 @@
           <td class="hoverTD">{{ formatLastModified(model.lastModified) }}</td>
           <td class="hoverTD">
             <!-- Add the "Use Model" button here -->
-            <button
-                class="btn btn-warning btn-sm"
-                @click="useModel(model)">Use Model</button>
+            <button class="btn btn-warning btn-sm" @click="useModel(model)">Use Model</button>
           </td>
           <!-- Add more columns as needed -->
         </tr>
       </tbody>
     </table>
-
   </div>
 </template>
 
@@ -61,10 +56,11 @@ export default {
         return [];
       }
       const query = this.searchQuery.toLowerCase();
-      return this.models.filter(model =>
-        model.id.toLowerCase().includes(query) ||
-        this.formatLastModified(model.lastModified).includes(query) ||
-        model.author.toLowerCase().includes(query)
+      return this.models.filter(
+        (model) =>
+          model.id.toLowerCase().includes(query) ||
+          this.formatLastModified(model.lastModified).includes(query) ||
+          model.author.toLowerCase().includes(query)
       );
     },
   },
@@ -74,7 +70,8 @@ export default {
   methods: {
     fetchModels() {
       const path = 'http://localhost:5001/models_by_creator';
-      axios.get(path)
+      axios
+        .get(path)
         .then((res) => {
           this.models = res.data.data;
         })
