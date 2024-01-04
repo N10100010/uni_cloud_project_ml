@@ -28,11 +28,13 @@ FIXED_CREATOR = "nota-ai"
 # The token for HuggingFace
 HF_BEARER_TOKEN = "Bearer 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"
 
+
 def generate_response_object(status_code: int) -> dict:
     return {
         "status_code": status_code,
         "status_message": requests.status_codes._codes[status_code]
     }
+
 
 @app.route('/')
 def start():
@@ -134,16 +136,17 @@ def save_model_output(image):
 @app.route('/test', methods=['GET'])
 def __test():
 
-    response = requests.get(
-        url="https://openimagebucket.s3.eu-central-1.amazonaws.com/Baysion_Theorem.png"
-    )
-
-    #response = requests.put(
-    #    #url="https://57lfpibw9j.execute-api.eu-central-1.amazonaws.com/test-stage/saveModelOutput"
-    #      # url="https://1l62es3fz3.execute-api.eu-central-1.amazonaws.com/test-stage/saveModelOutput"
-    #      url="https://1l62es3fz3.execute-api.eu-central-1.amazonaws.com/test-stage/generateModelOutput"
-    #    , data={'text_prompt': 'test value'}
+    #response = requests.get(
+    #    url="https://openimagebucket.s3.eu-central-1.amazonaws.com/Baysion_Theorem.png"
     #)
+
+    response = requests.post(
+        #url="https://57lfpibw9j.execute-api.eu-central-1.amazonaws.com/test-stage/saveModelOutput"
+          # url="https://1l62es3fz3.execute-api.eu-central-1.amazonaws.com/test-stage/saveModelOutput"
+          # url="https://1l62es3fz3.execute-api.eu-central-1.amazonaws.com/test-stage/generateModelOutput"
+          url="https://e935v4w0gh.execute-api.eu-central-1.amazonaws.com/default",
+          data=json.dumps({'text_prompt': 'test value'})
+    )
 
     response_object = generate_response_object(response.status_code)
 
