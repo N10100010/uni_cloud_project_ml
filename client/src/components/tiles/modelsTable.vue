@@ -11,7 +11,7 @@
     >
   </div>
 
-  <div id="modelsTable">
+  <div v-if="models" id="modelsTable">
     <table class="table table-hover">
       <thead>
         <tr>
@@ -38,6 +38,7 @@
       </tbody>
     </table>
   </div>
+  <p v-else><strong>Loading...</strong></p>
 </template>
 
 <script>
@@ -46,7 +47,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      models: [],
+      models: null,
       searchQuery: '',
     };
   },
@@ -69,11 +70,11 @@ export default {
   },
   methods: {
     fetchModels() {
-      const path = 'http://localhost:5001/models_by_creator';
+      const path = "https://nizbwiqgrotvvnxos4e67dscsi0gnvwy.lambda-url.eu-central-1.on.aws/";
       axios
         .get(path)
         .then((res) => {
-          this.models = res.data.data;
+          this.models = res.data.body;
         })
         .catch((error) => {
           console.error(error);

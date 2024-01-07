@@ -149,11 +149,8 @@ def __test():
     )
 
     response_object = generate_response_object(response.status_code)
-
     content = str(response.content)
-
     response_object['data'] = content
-
     return jsonify(response_object)
 
 

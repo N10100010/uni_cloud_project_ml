@@ -16,9 +16,6 @@
       <alert :message="message" v-if="showMessage"></alert>
     </div>
 
-    <p>Model ID: {{ modelId }}</p>
-
-    <modelInfoComponent :modelId=modelId></modelInfoComponent>
 
     <div class="col-sm-10">
       <div class="mb-3">
@@ -31,14 +28,19 @@
           placeholder="A cat living in a tree house"
           style="background-color: #d3d3d3"
         >
+        <br>
         <button @click="generateImage" class="btn btn-primary">Generate Image</button>
       </div>
 
-      <div class="local_container">
-        <img id="modelOutput" src="" alt="" class="centered-image" style="display: none;">
+      <div class="local_container" style="display: none;" id="modelOutput">
+        <img id="generatedImage" src="" alt="" class="centered-image">
+        <button @click="saveImage" class="btn btn-primary">Persist Image</button>
       </div>
     </div>
+    <br>
+        <modelInfoComponent :modelId=modelId></modelInfoComponent>
   </div>
+
 </template>
 
 <script>
@@ -64,9 +66,13 @@ export default {
   created() {
   },
   methods: {
+    saveImage() {
+
+    },
     generateImage() {
       const model_output = document.getElementById('modelOutput');
       model_output.style.display = 'None';
+      const img_tag = document.getElementById('generatedImage');
 
       try {
         this.inputText.trim();
@@ -76,16 +82,20 @@ export default {
       }
 
       axios
-        .put(`http://localhost:5001/generate_image/${encodeURIComponent(this.inputText)}`)
+        .post(
+            'https://5jjvoee0u1.execute-api.eu-central-1.amazonaws.com/generateModelOutput',
+            { prompt: this.inputText } // Send prompt in the request body
+        )
         .then((response) => {
-          console.log('Image generated:', response.data);
-          model_output.src = response.data.data.url;
-          model_output.alt = response.data.prompt;
-          model_output.style = 'display: block;';
+            console.log('Image generated:', response.data.body);
+            img_tag.src = response.data.body.data;
+            img_tag.alt = response.data.body.prompt;
+            model_output.style.display = 'block';
         })
         .catch((error) => {
-          console.error('Error generating image:', error);
+            console.error('Error generating image:', error);
         });
+
     },
   },
 };
