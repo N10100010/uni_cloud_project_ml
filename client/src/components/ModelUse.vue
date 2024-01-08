@@ -33,6 +33,8 @@
 
       <div class="local_container" style="display: none;" id="modelOutput">
         <img id="generatedImage" src="" alt="" class="centered-image">
+        <br>
+        <br>
         <button @click="saveImage" class="btn btn-primary">Persist Image</button>
       </div>
       <div class="local_container">
