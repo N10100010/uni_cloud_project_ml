@@ -1,7 +1,4 @@
-<!-- ModelsTable.vue -->
-
 <template>
-
   <div class="mb-3">
     <label for="searchInput" class="form-label">Search Models:</label>
     <input
@@ -10,10 +7,11 @@
       id="searchInput"
       v-model="searchQuery"
       placeholder="Enter search term"
-      style="background-color: #d3d3d3">
+      style="background-color: #d3d3d3"
+    >
   </div>
 
-  <div id="modelsTable">
+  <div v-if="models" id="modelsTable">
     <table class="table table-hover">
       <thead>
         <tr>
@@ -33,16 +31,14 @@
           <td class="hoverTD">{{ formatLastModified(model.lastModified) }}</td>
           <td class="hoverTD">
             <!-- Add the "Use Model" button here -->
-            <button
-                class="btn btn-warning btn-sm"
-                @click="useModel(model)">Use Model</button>
+            <button class="btn btn-warning btn-sm" @click="useModel(model)">Use Model</button>
           </td>
           <!-- Add more columns as needed -->
         </tr>
       </tbody>
     </table>
-
   </div>
+  <p v-else><strong>Loading...</strong></p>
 </template>
 
 <script>
@@ -51,7 +47,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      models: [],
+      models: null,
       searchQuery: '',
     };
   },
@@ -61,10 +57,11 @@ export default {
         return [];
       }
       const query = this.searchQuery.toLowerCase();
-      return this.models.filter(model =>
-        model.id.toLowerCase().includes(query) ||
-        this.formatLastModified(model.lastModified).includes(query) ||
-        model.author.toLowerCase().includes(query)
+      return this.models.filter(
+        (model) =>
+          model.id.toLowerCase().includes(query) ||
+          this.formatLastModified(model.lastModified).includes(query) ||
+          model.author.toLowerCase().includes(query)
       );
     },
   },
@@ -73,10 +70,11 @@ export default {
   },
   methods: {
     fetchModels() {
-      const path = 'http://localhost:5001/models_by_creator';
-      axios.get(path)
+      const path = "https://nizbwiqgrotvvnxos4e67dscsi0gnvwy.lambda-url.eu-central-1.on.aws/";
+      axios
+        .get(path)
         .then((res) => {
-          this.models = res.data.data;
+          this.models = res.data.body;
         })
         .catch((error) => {
           console.error(error);
@@ -90,7 +88,6 @@ export default {
       return idString.split('/')[1];
     },
     useModel(model) {
-      // Navigate to the ModelUse component with the selected model ID
       this.$router.push({ name: 'ModelUse', params: { modelId: model.id } });
     },
   },
