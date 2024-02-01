@@ -23,8 +23,10 @@ class ModelHandler:
         image_bytes = io.BytesIO()
         result.save(image_bytes, format='PNG')
         image_bytes = image_bytes.getvalue()
+        mime_type = "image/png"
         base64_encoded = base64.b64encode(image_bytes).decode('utf-8')
-        return base64_encoded
+        data_uri = f"data:{mime_type};base64,{base64_encoded}"
+        return data_uri
 
 
 @app.route("/predict", methods=["POST"])
