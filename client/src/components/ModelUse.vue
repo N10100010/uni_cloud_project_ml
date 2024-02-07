@@ -31,7 +31,9 @@
         <button @click="generateImage" class="btn btn-primary">Generate Image</button>
       </div>
 
-      <div class="local_container" style="display: none;" id="modelOutput">
+<p>        <loadingAnimComponent v-if="isLoading" > </loadingAnimComponent></p>
+<div class="local_container" style="display: none;" id="modelOutput">
+
         <img id="generatedImage" src="" alt="" class="centered-image">
         <br>
         <br>
@@ -51,6 +53,7 @@ import axios from 'axios';
 import Alert from './Alert.vue';
 import menuBar from './tiles/menuBar.vue';
 import modelInfoComponent from './tiles/modelInfo.vue';
+import loadingAnimation from './tiles/loadingAnimation.vue';
 
 export default {
   props: ['modelId'],
@@ -59,12 +62,15 @@ export default {
       message: '',
       showMessage: false,
       modelInfo: null,
+      isLoading: null,
+      image_data: null,
     };
   },
   components: {
     alert: Alert,
     menuBar: menuBar,
     modelInfoComponent: modelInfoComponent,
+    loadingAnimComponent: loadingAnimation,
   },
   created() {
   },
@@ -72,12 +78,12 @@ export default {
     saveImage() {
       const perma_tag = document.getElementById('perma_link');
       const img_tag_src = document.getElementById('generatedImage').src;
-      const image_data = img_tag_src.split(', ')[1];
-      const image_mime = img_tag_src.split(', ')[0].split('/')[1].split(';')[0];
+      const image_data = img_tag_src.split('base64,')[1];
+      const image_mime = img_tag_src.split(';base64,')[0].split(':')[1];
 
       axios.post('https://69f4t4neu1.execute-api.eu-central-1.amazonaws.com/saveModelOutputStage/', {
         image: image_data,
-        mime_type: 'image/' + image_mime
+        mime_type: image_mime
       })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
@@ -93,6 +99,7 @@ export default {
         });
     },
     generateImage() {
+      this.isLoading = true;
       const model_output = document.getElementById('modelOutput');
       model_output.style.display = 'None';
       const img_tag = document.getElementById('generatedImage');
@@ -104,14 +111,17 @@ export default {
 
       axios
         .post(
-          'https://5jjvoee0u1.execute-api.eu-central-1.amazonaws.com/generateModelOutput',
+          'https://5jjvoee0u1.execute-api.eu-central-1.amazonaws.com/generateModelOutput/',
           { prompt: this.inputText } // Send prompt in the request body
         )
         .then((response) => {
           console.log('Image generated:', response.data.body);
-          img_tag.src = response.data.body.data;
+          img_tag.src = JSON.parse(response.data.body).image;
           img_tag.alt = response.data.body.prompt;
           model_output.style.display = 'block';
+          this.isLoading = null;
+
+
         })
         .catch((error) => {
           console.error('Error generating image:', error);

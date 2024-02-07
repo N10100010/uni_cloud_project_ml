@@ -18,11 +18,14 @@
     <p><strong>Last Modified:</strong> {{ formatLastModified(modelInfo.lastModified) }}</p>
     -->
   </div>
-  <p v-else><strong>Loading...</strong></p>
+  <!--<p v-else><strong>Loading...</strong></p>-->
+
+  <p v-else><loadingAnimComponent> </loadingAnimComponent></p>
 </template>
 
 <script>
 import axios from 'axios';
+import loadingAnimation from './loadingAnimation.vue';
 
 export default {
   props: ['modelId'],
@@ -30,6 +33,9 @@ export default {
     return {
       modelInfo: null,
     };
+  },
+  components: {
+    loadingAnimComponent: loadingAnimation,
   },
   methods: {
     formatLastModified(dateString) {
